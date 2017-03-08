@@ -1,15 +1,16 @@
 package Models;
 
 public abstract class Vehiculo implements Arrancable, Movible {
-	private String color;
-	private String matricula;
-	private String marca;
-	private String modelo;
-	private int velocidadMaxima;
-	private float velocidadActual;
-	private int telefonoDueño;
-	private boolean estado;
+	protected String color;
+	protected String matricula;
+	protected String marca;
+	protected String modelo;
+	protected int velocidadMaxima;
+	protected float velocidadActual;
+	protected int telefonoDueño;
+	protected boolean estado;
 
+	@Override
 	public void arrancar() {
 		if (this.estado) {
 			System.out.println("Vehiculo " + this + " ya esta arrancado");
@@ -20,6 +21,7 @@ public abstract class Vehiculo implements Arrancable, Movible {
 
 	}
 
+	@Override
 	public void parar() {
 		if (!this.estado) {
 			System.out.println("Vehiculo " + this + " ya esta parado");
@@ -29,6 +31,7 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		}
 	}
 
+	@Override
 	public void acelerar(Double velocidad) {
 		if (this.velocidadActual + velocidad <= this.velocidadMaxima) {
 			this.velocidadActual += velocidad;
@@ -39,6 +42,7 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		}
 	}
 
+	@Override
 	public void frenar(Double velocidad) {
 		if (this.velocidadActual - velocidad < 0) {
 			this.velocidadActual -= this.velocidadActual;
