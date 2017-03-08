@@ -11,13 +11,13 @@ public abstract class Vehiculo implements Arrancable, Movible {
 	protected boolean estado;
 
 	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima,
-			float velocidadActual, int telefonoDueño) {
+			int telefonoDueño) {
 		this.color = color;
 		this.matricula = matricula;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.velocidadMaxima = velocidadMaxima;
-		this.velocidadActual = velocidadActual;
+		this.velocidadActual = 0;
 		this.telefonoDueño = telefonoDueño;
 		this.estado = false;
 	}
