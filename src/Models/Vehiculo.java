@@ -10,6 +10,18 @@ public abstract class Vehiculo implements Arrancable, Movible {
 	protected int telefonoDueño;
 	protected boolean estado;
 
+	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima,
+			float velocidadActual, int telefonoDueño) {
+		this.color = color;
+		this.matricula = matricula;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.velocidadMaxima = velocidadMaxima;
+		this.velocidadActual = velocidadActual;
+		this.telefonoDueño = telefonoDueño;
+		this.estado = false;
+	}
+
 	@Override
 	public void arrancar() {
 		if (this.estado) {
