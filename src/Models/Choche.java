@@ -1,5 +1,5 @@
 package Models;
 
-public class Choche {
+public class Choche extends Vehiculo {
 
 }
