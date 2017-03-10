@@ -37,7 +37,7 @@ public class Taller {
 	public String listarVehiculosReparados() {
 		String lista = "";
 		for (Vehiculo v : this.ListaVehiculosReparados) {
-			lista += v + " Telefno dueño: " + Integer.toString(v.getTelefonoDueño()) + "\n";
+			lista += v + " Telefno dueÃ±o: " + Integer.toString(v.getTelefonoDueÃ±o()) + "\n";
 		}
 		return lista;
 	}
@@ -116,12 +116,12 @@ public class Taller {
 				if (numero > opcionesMaximas || numero < 1) {
 					esCorrecto = false;
 					System.out.println("[ERROR] ha introducido un numero fuera de rango");
-					System.out.println("Introduce de nuevo el número: ");
+					System.out.println("Introduce de nuevo el nÃºmero: ");
 				}
 			} catch (Exception e) {
 				esCorrecto = false;
 				System.out.println("No ha introducido un numero o no es valido.");
-				System.out.println("Introduce de nuevo el número: ");
+				System.out.println("Introduce de nuevo el nÃºmero: ");
 			}
 		} while (esCorrecto == false);
 		return numero;
@@ -133,68 +133,87 @@ public class Taller {
 	 * muestra una lista de posibles reparaciones. Pide que selecciones una
 	 * reparacion.
 	 */
-	public void repararVehiculo() {
-		Scanner sc = new Scanner(System.in);
-		ArrayList<String> matriculas = new ArrayList<>();
-		int opcion = 0;
-		int opcion2;
-		Vehiculo v = null;
-		boolean reparado = false;
-		do {
-			boolean esCorrecto;
-
-			if (ListavehiculosAveriados.size() != 0) {
-				System.out.println("Selecciona un vehiculo de la lista para reparar: ");
-				for (int i = 0; i < this.ListavehiculosAveriados.size(); i++) {
-					System.out.println((i + 1) + ". " + this.ListavehiculosAveriados.get(i));
-					matriculas.add(listarMotocicletas().get(i).getMatricula());
+	public void repararVehiculo() {Scanner sc = new Scanner(System.in);
+			ArrayList<String> matriculas = new ArrayList<>();
+			int opcion = 0;
+			int opcion2;
+			Vehiculo v = null;
+			boolean reparado = false;
+			do {
+				boolean esCorrecto;
+	
+				if (ListavehiculosAveriados.size() != 0) {
+					System.out.println("Lista de vehiculos averiados:\n ");
+					for (int i = 0; i < this.ListavehiculosAveriados.size(); i++) {
+						System.out.println((i + 1) + ". " + this.ListavehiculosAveriados.get(i));
+						matriculas.add(listarMotocicletas().get(i).getMatricula());
+					}
+					System.out.print("Selecciona un vehiculo de la lista para reparar:\n ");
+					opcion = leerOpcion(this.ListavehiculosAveriados.size()) - 1;
+					v = buscarVehiculo(ListavehiculosAveriados,
+							((Vehiculo) ListavehiculosAveriados.get(opcion)).getMatricula());
+				} else {
+					v = null;
 				}
-				opcion = leerOpcion(this.ListavehiculosAveriados.size()) - 1;
-				v = buscarVehiculo(ListavehiculosAveriados,
-						((Vehiculo) ListavehiculosAveriados.get(opcion)).getMatricula());
-			} else {
-				v = null;
-			}
-			if (v != null) {
-
-				do {
-					int i;
-					String reparacionAuxiliar;
-					System.out.println("Selecciona una reparacion: ");
-					for (i= 0; i < this.listaReparaciones.size(); i++) {
-						System.out.println((i + 1) + ". " + this.listaReparaciones.get(i));
-
-					}
-					System.out.println((i + 1) + ". " + "Introducir otra reparación manualmente.");
-					opcion2 = leerOpcion(this.listaReparaciones.size()+1) - 1;
-					if(opcion2<=this.listaReparaciones.size()-1){
-					System.out.println(listaReparaciones.get(opcion2) + " realizado.");
-					}else{
-						System.out.println("Introduce la reparacion a realizar: ");
-						reparacionAuxiliar=sc.nextLine();
-						System.out.println(reparacionAuxiliar + " realizado.");
-					}
-					this.ListaVehiculosReparados.add(ListavehiculosAveriados.get(opcion));
-					this.ListavehiculosAveriados.remove(opcion);
-					String aux;
-					System.out.println("Quiere realizar mas reparaciones?(s para continuar n para salir");
-					aux = sc.next();
-					aux = aux.toLowerCase();
-					if (aux.equals("s") || aux.equals("n")) {
-						if (aux.equals("n")) {
-							reparado = false;
+				if (v != null) {
+	
+					do {
+						int i;
+						String reparacionAuxiliar;
+						System.out.println("Lista de reparaciones: ");
+						for (i= 0; i < this.listaReparaciones.size(); i++) {
+							System.out.println((i + 1) + ". " + this.listaReparaciones.get(i));
+	
 						}
-						esCorrecto = true;
-					} else {
-						System.out.println("ERROR: No ha introducido una opcion valida.");
-						esCorrecto = false;
-					}
-				} while (!esCorrecto);
+						System.out.println((i + 1) + ". " + "Introducir otra reparaciÃ³n manualmente.");
+						if(v.getAveria()!=null){
+							System.out.println("se le debe de realizar: "+v.getAveria());
+						}
+						System.out.print("Selecciona una reparacion: ");
+						opcion2 = leerOpcion(this.listaReparaciones.size()+1) - 1;
+						if(opcion2<=this.listaReparaciones.size()-1){
+						System.out.println(listaReparaciones.get(opcion2) + " realizado.");
+						}else{
+							System.out.println("Introduce la reparacion a realizar: ");
+							reparacionAuxiliar=sc.nextLine();
+							System.out.println(reparacionAuxiliar + " realizado.");
+						}
+						this.ListaVehiculosReparados.add(ListavehiculosAveriados.get(opcion));
+						this.ListavehiculosAveriados.remove(opcion);
+						String aux;
+						System.out.println("Quiere realizar mas reparaciones?(s para continuar n para salir");
+						aux = sc.next();
+						aux = aux.toLowerCase();
+						if (aux.equals("s") || aux.equals("n")) {
+							if (aux.equals("n")) {
+								reparado = true;
+							}
+							esCorrecto = true;
+						} else {
+							System.out.println("ERROR: No ha introducido una opcion valida.");
+							esCorrecto = false;
+						}
+					} while (!esCorrecto);
+	
+				} else {
+					System.out.println("No hay vehiculos averiados en el taller.");
+					reparado = true;
+				}
+			} while (!reparado);
+		}
 
-			} else {
-				System.out.println("No hay vehiculos averiados en el taller.");
-				reparado = true;
-			}
-		} while (!reparado);
+	public void clienterecogeVehiculo() {
+		System.out.println("Selecciona un vehiculo de la lista para entregar: ");
+		for (int i = 0; i < this.ListaVehiculosReparados.size(); i++) {
+			System.out.println((i + 1) + ". " + this.ListaVehiculosReparados.get(i));
+
+		}
+		int opcion = leerOpcion(this.ListaVehiculosReparados.size()) - 1;
+
+		System.out.println("Vehiculo " + this.ListaVehiculosReparados.get(opcion) + " entregado");
+		if (this.ListaVehiculosReparados.get(opcion).getAveria() != null) {
+			System.out.println("Se le ha realizado: " + this.ListaVehiculosReparados.get(opcion).getAveria() + ".");
+		}
+		this.ListaVehiculosReparados.remove(opcion);
 	}
 }

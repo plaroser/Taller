@@ -5,6 +5,7 @@ public abstract class Vehiculo implements Arrancable, Movible {
 	private String matricula;
 	private String marca;
 	private String modelo;
+	private String averia;
 	private int velocidadMaxima;
 	private float velocidadActual;
 	private int telefonoDueño;
@@ -20,6 +21,13 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		this.velocidadActual = 0;
 		this.telefonoDueño = telefonoDueño;
 		this.estado = false;
+		this.averia=null;
+	}
+
+	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima,
+			int telefonoDueño, String averia) {
+		this(color, matricula, marca, modelo, velocidadMaxima, telefonoDueño);
+		this.averia = averia;
 	}
 
 	@Override
@@ -61,6 +69,10 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		} else {
 			this.velocidadActual -= velocidad;
 		}
+	}
+
+	public String getAveria() {
+		return averia;
 	}
 
 	public String getColor() {
