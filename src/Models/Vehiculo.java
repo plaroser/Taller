@@ -1,14 +1,14 @@
 package Models;
 
 public abstract class Vehiculo implements Arrancable, Movible {
-	protected String color;
-	protected String matricula;
-	protected String marca;
-	protected String modelo;
-	protected int velocidadMaxima;
-	protected float velocidadActual;
-	protected int telefonoDueño;
-	protected boolean estado;
+	private String color;
+	private String matricula;
+	private String marca;
+	private String modelo;
+	private int velocidadMaxima;
+	private float velocidadActual;
+	private int telefonoDueño;
+	private boolean estado;
 
 	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima,
 			int telefonoDueño) {
@@ -61,6 +61,38 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		} else {
 			this.velocidadActual -= velocidad;
 		}
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public int getVelocidadMaxima() {
+		return velocidadMaxima;
+	}
+
+	public float getVelocidadActual() {
+		return velocidadActual;
+	}
+
+	public int getTelefonoDueño() {
+		return telefonoDueño;
+	}
+
+	public boolean isEstado() {
+		return estado;
 	}
 
 	@Override
