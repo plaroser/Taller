@@ -12,6 +12,12 @@ public class Taller {
 		this.ListaVehiculosReparados = new ArrayList<>();
 	}
 
+	/**
+	 * Inserta un vehiculo en la lista de vehiculosaveriados
+	 * 
+	 * @param Vehiculo
+	 *            a insertar
+	 */
 	public void aniadirVehiculoAveriado(Vehiculo v) {
 		this.ListavehiculosAveriados.add(v);
 	}
@@ -32,6 +38,10 @@ public class Taller {
 		return lista;
 	}
 
+	/**
+	 * crea una lista con las motocicletas disponibles en el taller
+	 * @return Lista de motocicletas
+	 */
 	public ArrayList<Vehiculo> listarMotocicletas() {
 		ArrayList<Vehiculo> listaMotos = new ArrayList<>();
 		for (Vehiculo v : ListavehiculosAveriados) {
@@ -46,6 +56,10 @@ public class Taller {
 
 	}
 
+	/**
+	 * Muestra un menu con las motocicletas disponibles. Tras esto pide
+	 * seleccionar una e introducir el nuevo escape
+	 */
 	public void cambiarEscape() {
 		Scanner sc = new Scanner(System.in);
 		ArrayList<String> matriculas = new ArrayList<>();
@@ -55,10 +69,11 @@ public class Taller {
 			System.out.println((i + 1) + ". " + listarMotocicletas().get(i));
 			matriculas.add(listarMotocicletas().get(i).getMatricula());
 		}
-		opcion = (leerOpcion(listarMotocicletas().size()))-1;
-		
-		Vehiculo v = buscarVehiculo(listarMotocicletas(), ((Motocicleta)listarMotocicletas().get(opcion)).getMatricula());
-		if(v != null){
+		opcion = (leerOpcion(listarMotocicletas().size())) - 1;
+
+		Vehiculo v = buscarVehiculo(listarMotocicletas(),
+				((Motocicleta) listarMotocicletas().get(opcion)).getMatricula());
+		if (v != null) {
 			System.out.println("Introduce el nuevo escape: ");
 			String escape = sc.nextLine();
 			((Motocicleta) v).cambiarEscape(escape);
