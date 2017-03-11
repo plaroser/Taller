@@ -76,6 +76,7 @@ public class Taller {
 		return listaMotos;
 
 	}
+
 	/**
 	 * Muestra un menu con las motocicletas disponibles. Tras esto pide
 	 * seleccionar una e introducir el nuevo escape
@@ -173,30 +174,30 @@ public class Taller {
 			}
 			if (v != null) {
 
-				do {
-					int i;
-					String reparacionAuxiliar;
-					System.out.println("Lista de reparaciones: ");
-					for (i = 0; i < this.listaReparaciones.size(); i++) {
-						System.out.println((i + 1) + ". " + this.listaReparaciones.get(i));
+				int i;
+				String reparacionAuxiliar;
+				System.out.println("Lista de reparaciones: ");
+				for (i = 0; i < this.listaReparaciones.size(); i++) {
+					System.out.println((i + 1) + ". " + this.listaReparaciones.get(i));
 
-					}
-					System.out.println((i + 1) + ". " + "Introducir otra reparación manualmente.");
-					if (v.getAveria() != null) {
-						System.out.println("se le debe de realizar: " + v.getAveria());
-					}
-					System.out.print("Selecciona una reparacion: ");
-					opcion2 = leerOpcion(this.listaReparaciones.size() + 1) - 1;
-					if (opcion2 <= this.listaReparaciones.size() - 1) {
-						System.out.println(listaReparaciones.get(opcion2) + " realizado.");
-					} else {
-						System.out.println("Introduce la reparacion a realizar: ");
-						reparacionAuxiliar = sc.nextLine();
-						System.out.println(reparacionAuxiliar + " realizado.");
-					}
-					this.ListaVehiculosReparados.add(ListavehiculosAveriados.get(opcion));
-					this.ListavehiculosAveriados.remove(opcion);
-					String aux;
+				}
+				System.out.println((i + 1) + ". " + "Introducir otra reparación manualmente.");
+				if (v.getAveria() != null) {
+					System.out.println("se le debe de realizar: " + v.getAveria());
+				}
+				System.out.print("Selecciona una reparacion: ");
+				opcion2 = leerOpcion(this.listaReparaciones.size() + 1) - 1;
+				if (opcion2 <= this.listaReparaciones.size() - 1) {
+					System.out.println(listaReparaciones.get(opcion2) + " realizado.");
+				} else {
+					System.out.println("Introduce la reparacion a realizar: ");
+					reparacionAuxiliar = sc.nextLine();
+					System.out.println(reparacionAuxiliar + " realizado.");
+				}
+				this.ListaVehiculosReparados.add(ListavehiculosAveriados.get(opcion));
+				this.ListavehiculosAveriados.remove(opcion);
+				String aux;
+				do {
 					System.out.println("Quiere realizar mas reparaciones?(s para continuar n para salir");
 					aux = sc.next();
 					aux = aux.toLowerCase();
