@@ -6,30 +6,73 @@ import Models.*;
 
 public class testTaller {
 	private static ArrayList<String> tiposVehiculos;
+	private static ArrayList<String> acciones;
+	private static Taller t = new Taller();
 
-	private static void añadirTiposVehiculos() {
+	private static void aniadirTiposVehiculos() {
 		tiposVehiculos = new ArrayList<>();
 		tiposVehiculos.add("Coche");
-		tiposVehiculos.add("Motocicleta");
 		tiposVehiculos.add("Ciclomotor");
+		tiposVehiculos.add("Motocicleta");
+
+	}
+
+	private static void aniadirTipoAcciones() {
+		acciones = new ArrayList<>();
+		acciones.add("Añadir un vehiculo a reparar");
+		acciones.add("Reparar un vehívulo");
 	}
 
 	public static void main(String[] args) {
-
+		aniadirTipoAcciones();
+		boolean finalizado = false;
 		System.out.println("-----BIENVENIDO-----");
-		System.out.println(listarTiposVehiculo());
-		leerOpcion(tiposVehiculos.size());
-		leerOpcion(tiposVehiculos.size());
+		do{
+		System.out.println("Lista de acciones disponibles:");
 
-		Vehiculo v = crearVehiculo();
-		System.out.println(v);
-		v = crearMoto();
+		mostrarLista(acciones);
+		switch (leerOpcion(acciones.size())) {
+		case 1:
+			do {
+				aniadirVehiculo();
+				System.out.println(
+						"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
+			} while (sioNo());
+			break;
+		case 2:
+			String matricula;
+		}
+		}while(!finalizado);
+
+	}
+
+	/**
+	 * Pregunta el tipo de vehiculo tras esto pide todos sus atributos por
+	 * teclado y depues lo añade a la lista de vehiculos averiados
+	 */
+	public static void aniadirVehiculo() {
+
+		// Mostrar los tipos de vehiculos
+		System.out.println(listarTiposVehiculo());
+		// Crear un vehiculo a partir de la opción seleccionada
+
+		switch (leerOpcion(tiposVehiculos.size())) {
+		case 1:
+		case 2:
+			;
+			t.aniadirVehiculoAveriado(crearVehiculo());
+			break;
+		case 3:
+			t.aniadirVehiculoAveriado(crearMoto());
+			break;
+
+		}
 
 	}
 
 	public static void mostrarLista(ArrayList<String> lista) {
 		if (lista.size() != 0) {
-			System.out.println("Lista de vehiculos averiados:\n ");
+
 			for (int i = 0; i < lista.size(); i++) {
 				System.out.println((i + 1) + ". " + lista.get(i));
 
@@ -42,7 +85,7 @@ public class testTaller {
 	}
 
 	public static String listarTiposVehiculo() {
-		añadirTiposVehiculos();
+		aniadirTiposVehiculos();
 		String aux = "";
 		System.out.println("Tipos de vehiculos disponibles:");
 		for (int i = 0; i < tiposVehiculos.size(); i++) {
@@ -64,7 +107,7 @@ public class testTaller {
 		String aux;
 		int numero = 0;
 		boolean esCorrecto = false;
-
+		System.out.print("Introduce la opción deseada: ");
 		do {
 			try {
 				aux = sc.next();
