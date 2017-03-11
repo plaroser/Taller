@@ -7,7 +7,20 @@ import Models.*;
 public class testTaller {
 	private static ArrayList<String> tiposVehiculos;
 	private static ArrayList<String> acciones;
+	private static ArrayList<String> reparaciones;
 	private static Taller t = new Taller();
+
+	private static void aniadirReparaciones() {
+		reparaciones = new ArrayList<>();
+		reparaciones.add("Acelerar");
+		reparaciones.add("Frenar");
+		reparaciones.add("Cambiar escape");
+		reparaciones.add("Subir ventanillas");
+		reparaciones.add("Bajar ventanillas");
+		reparaciones.add("Marcar como reparado");
+		reparaciones.add("Detener el proceso de reparación sin haber terminado");
+
+	}
 
 	private static void aniadirTiposVehiculos() {
 		tiposVehiculos = new ArrayList<>();
@@ -19,30 +32,57 @@ public class testTaller {
 
 	private static void aniadirTipoAcciones() {
 		acciones = new ArrayList<>();
+		acciones.add("Salir");
 		acciones.add("Añadir un vehiculo a reparar");
 		acciones.add("Reparar un vehívulo");
+
 	}
 
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		aniadirTipoAcciones();
+		aniadirReparaciones();
 		boolean finalizado = false;
 		System.out.println("-----BIENVENIDO-----");
-		do{
-		System.out.println("Lista de acciones disponibles:");
+		do {
+			System.out.println("Lista de acciones disponibles:");
+			mostrarLista(acciones);
+			switch (leerOpcion(acciones.size())) {
+			case 1:
+				finalizado = true;
+				break;
+			case 2:
+				do {
+					aniadirVehiculo();
+					System.out.println(
+							"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
+				} while (sioNo());
+				break;
+			case 3:
+				System.out.print("Introduce la matricula del vehiculo a reparar: ");
+				String matricula = sc.nextLine();
+				Vehiculo v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
+				if (v != null) {
+					System.out.println("Lista de reparaciones disponibles: ");
+					mostrarLista(reparaciones);
+					switch (leerOpcion(reparaciones.size())) {
+					case 1:
+						System.out.println("Introduce la velocidad que quiere acelerar el vehiculo:");
+						v.acelerar(leerDoubleMayorDe0());
 
-		mostrarLista(acciones);
-		switch (leerOpcion(acciones.size())) {
-		case 1:
-			do {
-				aniadirVehiculo();
-				System.out.println(
-						"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
-			} while (sioNo());
-			break;
-		case 2:
-			String matricula;
-		}
-		}while(!finalizado);
+						break;
+					case 2:
+						System.out.println("Introduce la velocidad que quiere frenar el vehiculo:");
+						v.frenar(leerDoubleMayorDe0());
+
+						break;
+					}
+				} else {
+					System.out.println("[ERROR] Matricula no exixtente en los vehiculos averiados.");
+				}
+
+			}
+		} while (!finalizado);
 
 	}
 
@@ -214,6 +254,31 @@ public class testTaller {
 			try {
 				aux = sc.next();
 				numero = Integer.parseInt(aux);
+				esCorrecto = true;
+				if (numero < 0) {
+					System.out.println("[ERROR] No se puede introducir un número menor de 0.");
+					esCorrecto = false;
+				}
+			} catch (Exception e) {
+				esCorrecto = false;
+				System.out.println("No ha introducido un numero o no es valido.");
+			}
+		} while (esCorrecto == false);
+		return numero;
+
+	}
+
+	public static Double leerDoubleMayorDe0() {
+		Scanner sc = new Scanner(System.in);
+		String aux;
+		Double numero = (double) 0;
+		boolean esCorrecto = false;
+
+		do {
+			System.out.print("Introduce un número entero: ");
+			try {
+				aux = sc.next();
+				numero = Double.parseDouble(aux);
 				esCorrecto = true;
 				if (numero < 0) {
 					System.out.println("[ERROR] No se puede introducir un número menor de 0.");

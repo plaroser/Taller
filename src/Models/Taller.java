@@ -109,7 +109,7 @@ public class Taller {
 		return ListaVehiculosReparados;
 	}
 
-	private Vehiculo buscarVehiculo(ArrayList<Vehiculo> lista, String matricula) {
+	public Vehiculo buscarVehiculo(ArrayList<Vehiculo> lista, String matricula) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i).getMatricula().equals(matricula)) {
 				return lista.get(i);
