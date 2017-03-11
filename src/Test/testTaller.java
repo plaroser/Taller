@@ -34,7 +34,7 @@ public class testTaller {
 		acciones = new ArrayList<>();
 		acciones.add("Salir");
 		acciones.add("Añadir un vehiculo a reparar");
-		acciones.add("Reparar un vehívulo");
+		acciones.add("Reparar un vehículo");
 
 	}
 
@@ -76,6 +76,39 @@ public class testTaller {
 						v.frenar(leerDoubleMayorDe0());
 
 						break;
+					case 3:
+						if (v instanceof Motocicleta) {
+							String escape;
+							System.out.print("Introduce el nuevo escape:");
+							escape = sc.nextLine();
+							((Motocicleta) v).cambiarEscape(escape);
+							System.out.println("Escape: " + escape + " instalado.");
+						} else {
+							System.out.println(
+									"El vehículo introducido no es una moto, no se le puede cambiar el escape.");
+						}
+						break;
+					case 4:
+						if (v instanceof Coche) {
+							((Coche) v).subirVentanillas();
+						} else {
+							System.out.println("El vehiculo seleccionado no es un coche.");
+						}
+						break;
+						
+					case 5:
+						if (v instanceof Coche) {
+							((Coche) v).bajarVentanillas();
+						} else {
+							System.out.println("El vehiculo seleccionado no es un coche.");
+						}
+						break;
+					case 6:
+						t.cambiarAReparados(v);
+						System.out.println("Vehiculo listo para entregar a su dueño.\nNumero de telefono para llamar: "+v.getTelefonoDueño());
+						break;
+						
+
 					}
 				} else {
 					System.out.println("[ERROR] Matricula no exixtente en los vehiculos averiados.");
@@ -206,6 +239,7 @@ public class testTaller {
 		String escape;
 		Vehiculo v = crearVehiculo();
 		System.out.println("¿La moto lleva el escape de serie?");
+		System.out.print("Introduce s o n:");
 		if (!sioNo()) {
 			System.out.println("Introduce el escape de la moto: ");
 			escape = sc.nextLine();
