@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Models.*;
 
-
 public class testTaller {
 	private static ArrayList<String> tiposVehiculos;
 
@@ -24,7 +23,7 @@ public class testTaller {
 
 		Vehiculo v = crearVehiculo();
 		System.out.println(v);
-		v=crearMoto();
+		v = crearMoto();
 
 	}
 
@@ -130,9 +129,9 @@ public class testTaller {
 		} else {
 			escape = null;
 		}
-		return new Motocicleta(v.getColor(), v.getMatricula(), v.getMarca(), v.getModelo(),
-				v.getVelocidadMaxima(), v.getTelefonoDueño(), escape, v.getAveria());
-		
+		return new Motocicleta(v.getColor(), v.getMatricula(), v.getMarca(), v.getModelo(), v.getVelocidadMaxima(),
+				v.getTelefonoDueño(), escape, v.getAveria());
+
 	}
 
 	/**
