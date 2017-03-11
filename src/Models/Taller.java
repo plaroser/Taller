@@ -228,6 +228,14 @@ public class Taller {
 			}
 		}
 	}
+	public void vehiculoEntregado(Vehiculo v){
+		for(int i =0;i<ListavehiculosAveriados.size();i++){
+			if(v.getMatricula().equals(ListaVehiculosReparados.get(i))){
+				ListaVehiculosReparados.remove(i);
+				break;
+			}
+		}
+	}
 	public void clienterecogeVehiculo() {
 		System.out.println("Selecciona un vehiculo de la lista para entregar: ");
 		for (int i = 0; i < this.ListaVehiculosReparados.size(); i++) {

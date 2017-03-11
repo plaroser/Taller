@@ -8,6 +8,7 @@ public class testTaller {
 	private static ArrayList<String> tiposVehiculos;
 	private static ArrayList<String> acciones;
 	private static ArrayList<String> reparaciones;
+	private static ArrayList<String> listados;
 	private static Taller t = new Taller();
 
 	private static void aniadirReparaciones() {
@@ -22,6 +23,15 @@ public class testTaller {
 
 	}
 
+	private static void aniadirlistados() {
+		listados = new ArrayList<>();
+		listados.add("Listar todos los vehículos");
+		listados.add("Listar vehículos averiados");
+		listados.add("Listar vehículos reparados");
+		listados.add("Volver al menú principal");
+
+	}
+
 	private static void aniadirTiposVehiculos() {
 		tiposVehiculos = new ArrayList<>();
 		tiposVehiculos.add("Coche");
@@ -32,9 +42,11 @@ public class testTaller {
 
 	private static void aniadirTipoAcciones() {
 		acciones = new ArrayList<>();
-		acciones.add("Salir");
 		acciones.add("Añadir un vehiculo a reparar");
 		acciones.add("Reparar un vehículo");
+		acciones.add("Listar vehiculos");
+		acciones.add("Entregar vehículo al cliente");
+		acciones.add("Salir");
 
 	}
 
@@ -43,25 +55,26 @@ public class testTaller {
 		aniadirTipoAcciones();
 		aniadirReparaciones();
 		boolean finalizado = false;
+		String matricula;
+		Vehiculo v;
+
 		System.out.println("-----BIENVENIDO-----");
 		do {
 			System.out.println("Lista de acciones disponibles:");
 			mostrarLista(acciones);
 			switch (leerOpcion(acciones.size())) {
+
 			case 1:
-				finalizado = true;
-				break;
-			case 2:
 				do {
 					aniadirVehiculo();
 					System.out.println(
 							"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
 				} while (sioNo());
 				break;
-			case 3:
+			case 2:
 				System.out.print("Introduce la matricula del vehiculo a reparar: ");
-				String matricula = sc.nextLine();
-				Vehiculo v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
+				matricula = sc.nextLine();
+				v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
 				if (v != null) {
 					System.out.println("Lista de reparaciones disponibles: ");
 					mostrarLista(reparaciones);
@@ -95,7 +108,7 @@ public class testTaller {
 							System.out.println("El vehiculo seleccionado no es un coche.");
 						}
 						break;
-						
+
 					case 5:
 						if (v instanceof Coche) {
 							((Coche) v).bajarVentanillas();
@@ -105,16 +118,63 @@ public class testTaller {
 						break;
 					case 6:
 						t.cambiarAReparados(v);
-						System.out.println("Vehiculo listo para entregar a su dueño.\nNumero de telefono para llamar: "+v.getTelefonoDueño());
+						System.out.println("Vehiculo listo para entregar a su dueño.\nNumero de telefono para llamar: "
+								+ v.getTelefonoDueño());
 						break;
-						
 
 					}
 				} else {
 					System.out.println("[ERROR] Matricula no exixtente en los vehiculos averiados.");
 				}
+				break;
+			// 3. Listar vehículos que a su vez mostrará el siguiente
+			// submenú:
+			case 3:
+				aniadirlistados();
+				mostrarLista(listados);
+				switch (leerOpcion(listados.size())) {
+				case 1:
+					System.out.println("Vehiculos averiados: ");
+					System.out.println(t.listarVehiculosAveriados());
+					System.out.println("Vehiculos reparados:");
+					System.out.println(t.getListaVehiculosReparados());
+					break;
+				case 2:
+					System.out.println("Vehiculos averiados: ");
+					System.out.println(t.listarVehiculosAveriados());
 
+					break;
+				case 3:
+					System.out.println("Vehiculos reparados:");
+					System.out.println(t.listarVehiculosReparados());
+					break;
+				default:
+					break;
+				}
+				// 4. Entregar vehículo al cliente
+
+				break;
+			case 4:
+				System.out.print("Introduce la matricula del vehiculo a entregar: ");
+				matricula = sc.nextLine();
+				v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
+				if (v != null) {
+					System.out.println("Vehículo aun sin reparar, por favor, vuelva mañana.");
+
+				} else {
+					v = t.buscarVehiculo(t.getListaVehiculosReparados(), matricula);
+					if (v != null) {
+						System.out.println("Puede llevarse el vehiculo. Gracias.");
+						t.vehiculoEntregado(v);
+					}
+					System.out.println("Usted no tiene ningun vehivulo en este taller.\nPuede irse cuando quiera.");
+				}
+				break;
+			case 5:
+				finalizado = true;
+				break;
 			}
+
 		} while (!finalizado);
 
 	}
@@ -309,7 +369,7 @@ public class testTaller {
 		boolean esCorrecto = false;
 
 		do {
-			System.out.print("Introduce un número entero: ");
+			System.out.print("Introduce un número: ");
 			try {
 				aux = sc.next();
 				numero = Double.parseDouble(aux);
