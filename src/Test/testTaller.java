@@ -1,13 +1,9 @@
 package Test;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Models.*;
 
-import javax.swing.SingleSelectionModel;
-
-import Models.Motocicleta;
-import Models.Vehiculo;
 
 public class testTaller {
 	private static ArrayList<String> tiposVehiculos;
