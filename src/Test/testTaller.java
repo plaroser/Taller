@@ -184,16 +184,17 @@ public class testTaller {
 	 * teclado y depues lo añade a la lista de vehiculos averiados
 	 */
 	public static void aniadirVehiculo() {
-
+		Vehiculo v;
 		// Mostrar los tipos de vehiculos
 		System.out.println(listarTiposVehiculo());
 		// Crear un vehiculo a partir de la opción seleccionada
 
 		switch (leerOpcion(tiposVehiculos.size())) {
 		case 1:
+			t.aniadirVehiculoAveriado(crearCoche());
+			break;
 		case 2:
-			;
-			t.aniadirVehiculoAveriado(crearVehiculo());
+			t.aniadirVehiculoAveriado(crearCiclomotor());
 			break;
 		case 3:
 			t.aniadirVehiculoAveriado(crearMoto());
@@ -289,12 +290,12 @@ public class testTaller {
 		velocidadMaxima = leerEnterosMayorDe0();
 		System.out.println("Introduce el número de telefono del dueño: ");
 		telefonoDueño = leerEnterosMayorDe0();
-		Vehiculo v = new Vehiculo(color, matricula, marca, modelo, telefonoDueño, velocidadMaxima, averia) {
+		Vehiculo v = new Vehiculo(color, matricula, marca, modelo, velocidadMaxima, telefonoDueño, averia) {
 		};
 		return v;
 	}
 
-	private static Vehiculo crearMoto() {
+	private static Motocicleta crearMoto() {
 		Scanner sc = new Scanner(System.in);
 		String escape;
 		Vehiculo v = crearVehiculo();
@@ -311,6 +312,33 @@ public class testTaller {
 
 	}
 
+	private static Coche crearCoche() {
+		Scanner sc = new Scanner(System.in);
+		Vehiculo v = crearVehiculo();
+		return new Coche(
+				v.getColor(), 
+				v.getMatricula(), 
+				v.getMarca(), 
+				v.getModelo(), 
+				v.getVelocidadMaxima(),
+				v.getTelefonoDueño(), 
+				v.getAveria());
+
+	}
+
+	private static Ciclomotor crearCiclomotor() {
+		Scanner sc = new Scanner(System.in);
+		Vehiculo v = crearVehiculo();
+		return new Ciclomotor(
+				v.getColor(), 
+				v.getMatricula(), 
+				v.getMarca(), 
+				v.getModelo(), 
+				v.getVelocidadMaxima(),
+				v.getTelefonoDueño(), 
+				v.getAveria());
+
+	}
 	/**
 	 * Pregunta que si quiere hacer algo
 	 * 
