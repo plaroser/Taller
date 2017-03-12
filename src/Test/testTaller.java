@@ -10,6 +10,7 @@ public class testTaller {
 	private static ArrayList<String> reparaciones;
 	private static ArrayList<String> listados;
 	private static Taller t = new Taller();
+	private static String GUIONES="-------------------------------";
 
 	private static void aniadirReparaciones() {
 		reparaciones = new ArrayList<>();
@@ -57,10 +58,12 @@ public class testTaller {
 		boolean finalizado = false;
 		String matricula;
 		Vehiculo v;
+		
 
 		System.out.println("-----BIENVENIDO-----");
 		do {
 			System.out.println("Lista de acciones disponibles:");
+			System.out.println(GUIONES);
 			mostrarLista(acciones);
 			switch (leerOpcion(acciones.size())) {
 
@@ -241,6 +244,7 @@ public class testTaller {
 		String aux;
 		int numero = 0;
 		boolean esCorrecto = false;
+		System.out.println(GUIONES);
 		System.out.print("Introduce la opción deseada: ");
 		do {
 			try {
