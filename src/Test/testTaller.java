@@ -1,19 +1,19 @@
 package Test;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 import Models.*;
 
 public class testTaller {
-	private static ArrayList<String> tiposVehiculos;
-	private static ArrayList<String> acciones;
-	private static ArrayList<String> reparaciones;
-	private static ArrayList<String> listados;
+	private static LinkedList<String> tiposVehiculos;
+	private static LinkedList<String> acciones;
+	private static LinkedList<String> reparaciones;
+	private static LinkedList<String> listados;
 	private static Taller t = new Taller();
-	private static String GUIONES="-------------------------------";
+	private static String GUIONES = "-------------------------------";
 
 	private static void aniadirReparaciones() {
-		reparaciones = new ArrayList<>();
+		reparaciones = new LinkedList();
 		reparaciones.add("Acelerar");
 		reparaciones.add("Frenar");
 		reparaciones.add("Cambiar escape");
@@ -25,7 +25,7 @@ public class testTaller {
 	}
 
 	private static void aniadirlistados() {
-		listados = new ArrayList<>();
+		listados = new LinkedList<>();
 		listados.add("Listar todos los vehículos");
 		listados.add("Listar vehículos averiados");
 		listados.add("Listar vehículos reparados");
@@ -34,7 +34,7 @@ public class testTaller {
 	}
 
 	private static void aniadirTiposVehiculos() {
-		tiposVehiculos = new ArrayList<>();
+		tiposVehiculos = new LinkedList<>();
 		tiposVehiculos.add("Coche");
 		tiposVehiculos.add("Ciclomotor");
 		tiposVehiculos.add("Motocicleta");
@@ -42,7 +42,7 @@ public class testTaller {
 	}
 
 	private static void aniadirTipoAcciones() {
-		acciones = new ArrayList<>();
+		acciones = new LinkedList<>();
 		acciones.add("Añadir un vehiculo a reparar");
 		acciones.add("Reparar un vehículo");
 		acciones.add("Listar vehiculos");
@@ -58,128 +58,132 @@ public class testTaller {
 		boolean finalizado = false;
 		String matricula;
 		Vehiculo v;
-		
 
 		System.out.println("-----BIENVENIDO-----");
-		do {
-			System.out.println("Lista de acciones disponibles:");
-			System.out.println(GUIONES);
-			mostrarLista(acciones);
-			switch (leerOpcion(acciones.size())) {
+		System.out.println("¿Quieres arrancar una demo?\nIntroduce S o N:");
+		if (sioNo()) {
 
-			case 1:
-				do {
-					aniadirVehiculo();
-					System.out.println(
-							"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
-				} while (sioNo());
-				break;
-			case 2:
-				System.out.print("Introduce la matricula del vehiculo a reparar: ");
-				matricula = sc.nextLine();
-				v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
-				if (v != null) {
-					System.out.println("Lista de reparaciones disponibles: ");
-					mostrarLista(reparaciones);
-					switch (leerOpcion(reparaciones.size())) {
+		} else {
+			do {
+				System.out.println("Lista de acciones disponibles:");
+				System.out.println(GUIONES);
+				mostrarLista(acciones);
+				switch (leerOpcion(acciones.size())) {
+
+				case 1:
+					do {
+						aniadirVehiculo();
+						System.out.println(
+								"¿Quieres añadir mas vehiculos?\nIntrodudice \"s\" para añadir mas o \"n\" para volver.");
+					} while (sioNo());
+					break;
+				case 2:
+					System.out.print("Introduce la matricula del vehiculo a reparar: ");
+					matricula = sc.nextLine();
+					v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
+					if (v != null) {
+						System.out.println("Lista de reparaciones disponibles: ");
+						mostrarLista(reparaciones);
+						switch (leerOpcion(reparaciones.size())) {
+						case 1:
+							System.out.println("Introduce la velocidad que quiere acelerar el vehiculo:");
+							v.acelerar(leerDoubleMayorDe0());
+
+							break;
+						case 2:
+							System.out.println("Introduce la velocidad que quiere frenar el vehiculo:");
+							v.frenar(leerDoubleMayorDe0());
+
+							break;
+						case 3:
+							if (v instanceof Motocicleta) {
+								String escape;
+								System.out.print("Introduce el nuevo escape:");
+								escape = sc.nextLine();
+								((Motocicleta) v).cambiarEscape(escape);
+								System.out.println("Escape: " + escape + " instalado.");
+							} else {
+								System.out.println(
+										"El vehículo introducido no es una moto, no se le puede cambiar el escape.");
+							}
+							break;
+						case 4:
+							if (v instanceof Coche) {
+								((Coche) v).subirVentanillas();
+							} else {
+								System.out.println("El vehiculo seleccionado no es un coche.");
+							}
+							break;
+
+						case 5:
+							if (v instanceof Coche) {
+								((Coche) v).bajarVentanillas();
+							} else {
+								System.out.println("El vehiculo seleccionado no es un coche.");
+							}
+							break;
+						case 6:
+							t.cambiarAReparados(v);
+							System.out.println(
+									"Vehiculo listo para entregar a su dueño.\nNumero de telefono para llamar: "
+											+ v.getTelefonoDueño());
+							break;
+
+						}
+					} else {
+						System.out.println("[ERROR] Matricula no exixtente en los vehiculos averiados.");
+					}
+					break;
+				// 3. Listar vehículos que a su vez mostrará el siguiente
+				// submenú:
+				case 3:
+					aniadirlistados();
+					mostrarLista(listados);
+					switch (leerOpcion(listados.size())) {
 					case 1:
-						System.out.println("Introduce la velocidad que quiere acelerar el vehiculo:");
-						v.acelerar(leerDoubleMayorDe0());
-
+						System.out.println("Vehiculos averiados: ");
+						System.out.println(t.listarVehiculosAveriados());
+						System.out.println("Vehiculos reparados:");
+						System.out.println(t.getListaVehiculosReparados());
 						break;
 					case 2:
-						System.out.println("Introduce la velocidad que quiere frenar el vehiculo:");
-						v.frenar(leerDoubleMayorDe0());
+						System.out.println("Vehiculos averiados: ");
+						System.out.println(t.listarVehiculosAveriados());
 
 						break;
 					case 3:
-						if (v instanceof Motocicleta) {
-							String escape;
-							System.out.print("Introduce el nuevo escape:");
-							escape = sc.nextLine();
-							((Motocicleta) v).cambiarEscape(escape);
-							System.out.println("Escape: " + escape + " instalado.");
-						} else {
-							System.out.println(
-									"El vehículo introducido no es una moto, no se le puede cambiar el escape.");
-						}
+						System.out.println("Vehiculos reparados:");
+						System.out.println(t.listarVehiculosReparados());
 						break;
-					case 4:
-						if (v instanceof Coche) {
-							((Coche) v).subirVentanillas();
-						} else {
-							System.out.println("El vehiculo seleccionado no es un coche.");
-						}
+					default:
 						break;
-
-					case 5:
-						if (v instanceof Coche) {
-							((Coche) v).bajarVentanillas();
-						} else {
-							System.out.println("El vehiculo seleccionado no es un coche.");
-						}
-						break;
-					case 6:
-						t.cambiarAReparados(v);
-						System.out.println("Vehiculo listo para entregar a su dueño.\nNumero de telefono para llamar: "
-								+ v.getTelefonoDueño());
-						break;
-
 					}
-				} else {
-					System.out.println("[ERROR] Matricula no exixtente en los vehiculos averiados.");
-				}
-				break;
-			// 3. Listar vehículos que a su vez mostrará el siguiente
-			// submenú:
-			case 3:
-				aniadirlistados();
-				mostrarLista(listados);
-				switch (leerOpcion(listados.size())) {
-				case 1:
-					System.out.println("Vehiculos averiados: ");
-					System.out.println(t.listarVehiculosAveriados());
-					System.out.println("Vehiculos reparados:");
-					System.out.println(t.getListaVehiculosReparados());
-					break;
-				case 2:
-					System.out.println("Vehiculos averiados: ");
-					System.out.println(t.listarVehiculosAveriados());
+					// 4. Entregar vehículo al cliente
 
 					break;
-				case 3:
-					System.out.println("Vehiculos reparados:");
-					System.out.println(t.listarVehiculosReparados());
-					break;
-				default:
-					break;
-				}
-				// 4. Entregar vehículo al cliente
-
-				break;
-			case 4:
-				System.out.print("Introduce la matricula del vehiculo a entregar: ");
-				matricula = sc.nextLine();
-				v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
-				if (v != null) {
-					System.out.println("Vehículo aun sin reparar, por favor, vuelva mañana.");
-
-				} else {
-					v = t.buscarVehiculo(t.getListaVehiculosReparados(), matricula);
+				case 4:
+					System.out.print("Introduce la matricula del vehiculo a entregar: ");
+					matricula = sc.nextLine();
+					v = t.buscarVehiculo(t.getListavehiculosAveriados(), matricula);
 					if (v != null) {
-						System.out.println("Puede llevarse el vehiculo. Gracias.");
-						t.vehiculoEntregado(v);
+						System.out.println("Vehículo aun sin reparar, por favor, vuelva mañana.");
+
+					} else {
+						v = t.buscarVehiculo(t.getListaVehiculosReparados(), matricula);
+						if (v != null) {
+							System.out.println("Puede llevarse el vehiculo. Gracias.");
+							t.vehiculoEntregado(v);
+						}
+						System.out.println("Usted no tiene ningun vehivulo en este taller.\nPuede irse cuando quiera.");
 					}
-					System.out.println("Usted no tiene ningun vehivulo en este taller.\nPuede irse cuando quiera.");
+					break;
+				case 5:
+					finalizado = true;
+					break;
 				}
-				break;
-			case 5:
-				finalizado = true;
-				break;
-			}
 
-		} while (!finalizado);
-
+			} while (!finalizado);
+		}
 	}
 
 	/**
@@ -207,11 +211,11 @@ public class testTaller {
 
 	}
 
-	public static void mostrarLista(ArrayList<String> lista) {
-		if (lista.size() != 0) {
+	public static void mostrarLista(LinkedList<String> acciones2) {
+		if (acciones2.size() != 0) {
 
-			for (int i = 0; i < lista.size(); i++) {
-				System.out.println((i + 1) + ". " + lista.get(i));
+			for (int i = 0; i < acciones2.size(); i++) {
+				System.out.println((i + 1) + ". " + acciones2.get(i));
 
 			}
 
@@ -319,30 +323,19 @@ public class testTaller {
 	private static Coche crearCoche() {
 		Scanner sc = new Scanner(System.in);
 		Vehiculo v = crearVehiculo();
-		return new Coche(
-				v.getColor(), 
-				v.getMatricula(), 
-				v.getMarca(), 
-				v.getModelo(), 
-				v.getVelocidadMaxima(),
-				v.getTelefonoDueño(), 
-				v.getAveria());
+		return new Coche(v.getColor(), v.getMatricula(), v.getMarca(), v.getModelo(), v.getVelocidadMaxima(),
+				v.getTelefonoDueño(), v.getAveria());
 
 	}
 
 	private static Ciclomotor crearCiclomotor() {
 		Scanner sc = new Scanner(System.in);
 		Vehiculo v = crearVehiculo();
-		return new Ciclomotor(
-				v.getColor(), 
-				v.getMatricula(), 
-				v.getMarca(), 
-				v.getModelo(), 
-				v.getVelocidadMaxima(),
-				v.getTelefonoDueño(), 
-				v.getAveria());
+		return new Ciclomotor(v.getColor(), v.getMatricula(), v.getMarca(), v.getModelo(), v.getVelocidadMaxima(),
+				v.getTelefonoDueño(), v.getAveria());
 
 	}
+
 	/**
 	 * Pregunta que si quiere hacer algo
 	 * 

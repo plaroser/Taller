@@ -6,6 +6,8 @@ public abstract class Vehiculo implements Arrancable, Movible {
 	private String marca;
 	private String modelo;
 	private String averia;
+	private float precioReparacion;
+	private float totalPagado;
 	private int velocidadMaxima;
 	private float velocidadActual;
 	private int telefonoDueño;
@@ -21,13 +23,59 @@ public abstract class Vehiculo implements Arrancable, Movible {
 		this.velocidadActual = 0;
 		this.telefonoDueño = telefonoDueño;
 		this.estado = false;
-		this.averia=null;
+		this.averia = null;
+		this.precioReparacion = 0;
+		this.totalPagado = 0;
 	}
 
-	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima,
-			int telefonoDueño, String averia) {
+	public Vehiculo(String color, String matricula, String marca, String modelo, int velocidadMaxima, int telefonoDueño,
+			String averia) {
 		this(color, matricula, marca, modelo, velocidadMaxima, telefonoDueño);
 		this.averia = averia;
+	}
+
+	/**
+	 * Realiza un aumento a total pagado No podra ser iferior a 0
+	 * 
+	 * @param pago
+	 *            a realizar.
+	 */
+	public void pagarReparacion(float pago) {
+		if (pago > 0) {
+			if (this.totalPagado < this.precioReparacion) {
+				this.totalPagado += pago;
+			} else {
+				if ((this.precioReparacion - this.totalPagado) >= pago) {
+					this.totalPagado += pago;
+					System.out.println("Pago realizado con exito.");
+				} else {
+					float restante = this.precioReparacion - this.totalPagado;
+					this.totalPagado += restante;
+					System.out.println("Pago realizado con exito.");
+					System.out.println("Le sobran: " + (pago - restante) + " Eur.");
+				}
+			}
+		} else {
+			System.out.println("[ERROR]: El importe a pagar no puede ser inferior o igual a 0.");
+		}
+	}
+
+	public float getPrecioReparacion() {
+		return precioReparacion;
+	}
+
+	public float getTotalPagado() {
+		return totalPagado;
+	}
+
+	/**
+	 * Establece un presupuesto de la reparacion del vehiculo
+	 * 
+	 * @param coste
+	 *            de la reparacion
+	 */
+	public void darPrecioReparacion(float precio) {
+		this.precioReparacion = precio;
 	}
 
 	@Override
